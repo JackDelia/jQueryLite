@@ -159,6 +159,14 @@
 	  return new DOMNodeCollection(hits);
 	};
 	
+	DOMNodeCollection.prototype.remove = function () {
+	  this.nodes.forEach(function (node) {
+	    node.outerHTML = "";
+	  });
+	
+	  this.nodes = [];
+	};
+	
 	
 	module.exports = DOMNodeCollection;
 
