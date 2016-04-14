@@ -102,6 +102,31 @@
 	  });
 	};
 	
+	DOMNodeCollection.prototype.attr = function (attribute, value) {
+	  if (value === undefined) {
+	    return this.els[0].getAttribute(attribute);
+	  } else {
+	    this.els.forEach(function(el) {
+	      el.setAttribute(attribute, value);
+	    });
+	  }
+	};
+	
+	DOMNodeCollection.prototype.addClass = function (className) {
+	  var oldClasses = this.attr("class");
+	
+	  this.attr("class", oldClasses + " " + className);
+	};
+	
+	DOMNodeCollection.prototype.removeClass = function (className) {
+	  var classes = this.attr("class").split(" ");
+	
+	  classes.splice(classes.indexOf(className), 1);
+	
+	  this.attr("class", classes.join(" "));
+	};
+	
+	
 	module.exports = DOMNodeCollection;
 
 
