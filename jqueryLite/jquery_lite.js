@@ -46,11 +46,8 @@
 
 	var DOMNodeCollection = __webpack_require__(1);
 	
-	console.log("goodbye");
-	
 	window.$l = function(target){
 	  var els;
-	
 	
 	  if (target instanceof HTMLElement) {
 	    els = new DOMNodeCollection([target]);
@@ -84,6 +81,25 @@
 	
 	DOMNodeCollection.prototype.empty = function () {
 	  this.html("");
+	};
+	
+	DOMNodeCollection.prototype.append = function (content) {
+	  if (content instanceof DOMNodeCollection) {
+	    var htmlEls = content.els.map(function(el) {
+	      return el.outerHTML;
+	    });
+	
+	    content = htmlEls.join("");
+	  }
+	
+	  if (content instanceof HTMLElement) {
+	    content = content.outerHTML;
+	  }
+	
+	
+	  this.els.forEach(function(el) {
+	    el.innerHTML += content;
+	  });
 	};
 	
 	module.exports = DOMNodeCollection;
