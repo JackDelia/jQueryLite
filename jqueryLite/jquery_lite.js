@@ -91,7 +91,46 @@
 	  return target;
 	};
 	
+	window.$l.AJAX_DEFAULTS = {
+	  success: function(data){
+	    console.log("ajax success");
+	    console.log(data);
+	  },
 	
+	  error: function(){
+	    console.log("ajax error");
+	  },
+	
+	  url: window.location.href,
+	
+	  method: "GET",
+	
+	  data: {},
+	
+	  contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+	};
+	
+	
+	window.$l.ajax = function(options) {
+	  options = options || {};
+	
+	  options = window.$l.extend(window.$l.AJAX_DEFAULTS, options);
+	
+	  var xhr = new XMLHttpRequest();
+	
+	  xhr.open(options.method, options.url);
+	
+	  xhr.onload = function() {
+	    if (xhr.status === 200) {
+	      options.success(JSON.parse(xhr.response));
+	    } else {
+	      options.error();
+	    }
+	  };
+	  xhr.send(options.data);
+	
+	
+	};
 	
 	
 	
