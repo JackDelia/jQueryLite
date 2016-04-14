@@ -46,7 +46,6 @@
 
 	var DOMNodeCollection = __webpack_require__(1);
 	
-	
 	window.$l = function(target){
 	  var els;
 	
@@ -75,6 +74,30 @@
 	
 	window.$l.toBeInvoked = [];
 	
+	window.$l.extend = function() {
+	  var target = arguments[0];
+	  var args = [].slice.call(arguments, 1);
+	
+	  args.forEach(function(arg){
+	    for(var key in target){
+	
+	      if (arg[key] !== undefined){
+	        target[key] = arg[key];
+	      }
+	
+	    }
+	  });
+	
+	  return target;
+	};
+	
+	
+	
+	
+	
+	
+	
+	// tests
 	window.$l(function(){
 	  console.log("this typed first");
 	});
