@@ -147,6 +147,18 @@
 	  return new DOMNodeCollection(parents);
 	};
 	
+	DOMNodeCollection.prototype.find = function (selector) {
+	  var hits = [];
+	
+	  this.nodes.forEach(function(node) {
+	    var nodeHits = [].slice.call(node.querySelectorAll(selector));
+	
+	    hits = hits.concat(nodeHits);
+	  });
+	
+	  return new DOMNodeCollection(hits);
+	};
+	
 	
 	module.exports = DOMNodeCollection;
 
