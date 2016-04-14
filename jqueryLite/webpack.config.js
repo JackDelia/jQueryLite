@@ -1,7 +1,9 @@
 module.exports = {
-    entry: "./lib/main.js",
-    output: {
-        path: __dirname,
-        filename: "jquery_lite.js"
-    }
+  context: __dirname,
+  entry: "./lib/main.js",
+  output: {
+    path: "./",
+    filename: "jquery_lite.js"
+  },
+  devtool: 'source-maps'
 };
