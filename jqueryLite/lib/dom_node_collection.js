@@ -1,5 +1,6 @@
 function DOMNodeCollection(nodes){
   this.nodes = nodes;
+  this.events = {};
 }
 
 DOMNodeCollection.prototype.html = function (content) {
@@ -99,6 +100,48 @@ DOMNodeCollection.prototype.remove = function () {
   });
 
   this.nodes = [];
+};
+
+DOMNodeCollection.prototype.on = function (type, callback) {
+  this.nodes.forEach(function (node) {
+    node.addEventListener(type, callback);
+  });
+
+  this.events[type] = this.events[type] || [];
+
+  this.events[type].push(callback);
+};
+
+DOMNodeCollection.prototype.off = function (type, callback) {
+  var callbacks;
+  var types = [];
+
+  if (type === undefined) {
+    for(var k in this.events) {
+      types.push(k);
+    }
+  } else {
+    types.push(type);
+  }
+
+  var self = this;
+
+  this.nodes.forEach(function (node) {
+    types.forEach(function(currentType) {
+      var currentTypeEvents = self.events[currentType];
+
+      if (callback === undefined) {
+        callbacks = currentTypeEvents;
+      } else {
+        callbacks = [callback];
+      }
+
+      callbacks.forEach(function(currentCallback) {
+        node.removeEventListener(currentType, currentCallback);
+        currentTypeEvents.splice(currentTypeEvents.indexOf(currentCallback), 1);
+      });
+    });
+  });
 };
 
 
