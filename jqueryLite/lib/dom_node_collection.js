@@ -4,13 +4,17 @@ function DOMNodeCollection(els){
 
 DOMNodeCollection.prototype.html = function (content) {
   // debugger;
-  if (content) {
+  if (content || content === "") {
     this.els.forEach(function (el) {
       el.innerHTML = content;
     });
   } else {
     return this.els[0].innerHTML;
   }
+};
+
+DOMNodeCollection.prototype.empty = function () {
+  this.html("");
 };
 
 module.exports = DOMNodeCollection;
