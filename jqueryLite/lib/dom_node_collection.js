@@ -71,5 +71,15 @@ DOMNodeCollection.prototype.children = function () {
   return new DOMNodeCollection(children);
 };
 
+DOMNodeCollection.prototype.parent = function () {
+  var parents = [];
+
+  this.nodes.forEach(function(node){
+    parents.push(node.parentElement);
+  });
+
+  return new DOMNodeCollection(parents);
+};
+
 
 module.exports = DOMNodeCollection;
