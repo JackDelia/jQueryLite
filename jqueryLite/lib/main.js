@@ -11,6 +11,11 @@ window.$l = function(target){
     } else {
       window.$l.toBeInvoked.push(target);
     }
+  } else if (target.match(/^<.+><\/.+>$/)){
+    var elName = target.match(/^<(.+)><\/.+>$/)[1];
+
+    var el = document.createElement(elName);
+    els = new DOMNodeCollection([el]);
   } else {
     els = document.querySelectorAll(target);
     els = Array.prototype.slice.call(els);
@@ -82,19 +87,4 @@ window.$l.ajax = function(options) {
     }
   };
   xhr.send(options.data);
-
-
 };
-
-
-
-
-
-// tests
-window.$l(function(){
-  console.log("this typed first");
-});
-
-window.$l(function(){
-  console.log("another test");
-});

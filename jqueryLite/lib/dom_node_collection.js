@@ -4,7 +4,6 @@ function DOMNodeCollection(nodes){
 }
 
 DOMNodeCollection.prototype.html = function (content) {
-  // debugger;
   if (content || content === "") {
     this.nodes.forEach(function (node) {
       node.innerHTML = content;
@@ -49,15 +48,19 @@ DOMNodeCollection.prototype.attr = function (attribute, value) {
 
 DOMNodeCollection.prototype.addClass = function (className) {
   var oldClasses = this.attr("class");
-
-  this.attr("class", oldClasses + " " + className);
+  if (oldClasses !== null)
+    this.attr("class", oldClasses + " " + className);
+  else
+    this.attr("class", className);
 };
 
 DOMNodeCollection.prototype.removeClass = function (className) {
   var classes = this.attr("class").split(" ");
 
-  classes.splice(classes.indexOf(className), 1);
-
+  if (classes.indexOf(className) !== -1) {
+    classes.splice(classes.indexOf(className), 1);
+  }
+  
   this.attr("class", classes.join(" "));
 };
 

@@ -57,6 +57,11 @@
 	    } else {
 	      window.$l.toBeInvoked.push(target);
 	    }
+	  } else if (target.match(/^<.+><\/.+>$/)){
+	    var elName = target.match(/^<(.+)><\/.+>$/)[1];
+	
+	    var el = document.createElement(elName);
+	    els = new DOMNodeCollection([el]);
 	  } else {
 	    els = document.querySelectorAll(target);
 	    els = Array.prototype.slice.call(els);
@@ -128,22 +133,7 @@
 	    }
 	  };
 	  xhr.send(options.data);
-	
-	
 	};
-	
-	
-	
-	
-	
-	// tests
-	window.$l(function(){
-	  console.log("this typed first");
-	});
-	
-	window.$l(function(){
-	  console.log("another test");
-	});
 
 
 /***/ },
@@ -156,7 +146,6 @@
 	}
 	
 	DOMNodeCollection.prototype.html = function (content) {
-	  // debugger;
 	  if (content || content === "") {
 	    this.nodes.forEach(function (node) {
 	      node.innerHTML = content;
@@ -201,15 +190,19 @@
 	
 	DOMNodeCollection.prototype.addClass = function (className) {
 	  var oldClasses = this.attr("class");
-	
-	  this.attr("class", oldClasses + " " + className);
+	  if (oldClasses !== null)
+	    this.attr("class", oldClasses + " " + className);
+	  else
+	    this.attr("class", className);
 	};
 	
 	DOMNodeCollection.prototype.removeClass = function (className) {
 	  var classes = this.attr("class").split(" ");
 	
-	  classes.splice(classes.indexOf(className), 1);
-	
+	  if (classes.indexOf(className) !== -1) {
+	    classes.splice(classes.indexOf(className), 1);
+	  }
+	  
 	  this.attr("class", classes.join(" "));
 	};
 	
